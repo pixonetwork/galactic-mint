@@ -1,0 +1,12 @@
+{
+  "name": "GALACTIC // LITE",
+  "navigation": [
+    {
+      "group": "System Access",
+      "pages": ["portal"]
+    }
+  ],
+  "colors": {
+    "primary": "#00f2ff"
+  }
+}
