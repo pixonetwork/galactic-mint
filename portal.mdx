@@ -1,26 +1,106 @@
 ---
 title: "GALACTIC // LITE"
+layout: "none"
 ---
 
-<script>
-  {`
-    (function() {
-        const src = "https://cdn.jsdelivr.net/npm/galactic-lite@latest/";
-        fetch(src + "index.html")
-            .then(res => res.text())
-            .then(html => {
-                // Injects the CDN base so relative paths work
-                const patchedHtml = html.replace("<head>", '<head><base href="' + src + '">');
-                
-                // Clear Mintlify and become GALACTIC // LITE
-                document.open();
-                document.write(patchedHtml);
-                document.close();
-            });
-    })();
-  `}
-</script>
+<style>
+  /* Ensure the container takes up the full viewport */
+  .portal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'Inter', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
 
-# INITIALIZING_PORTAL...
-Establishing secure connection to the tactical node database. 
-[FORCE_UPLINK](https://unpkg.com/galactic-lite/index.html)
+  /* Loading State Styles */
+  .boot-screen {
+    padding: 40px;
+    color: #00f2ff;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .glitch-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+  }
+
+  .status-line {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-bottom: 5px;
+  }
+
+  /* The Application Frame */
+  #galactic-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: none; /* Hidden until loaded */
+  }
+
+  /* Blinking cursor effect */
+  .cursor {
+    display: inline-block;
+    width: 10px;
+    height: 20px;
+    background: #00f2ff;
+    animation: blink 1s infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+</style>
+
+<div class="portal-container">
+  <!-- Boot/Loading Screen -->
+  <div id="boot-screen" class="boot-screen">
+    <div class="glitch-text">INITIALIZING_PORTAL...<span class="cursor"></span></div>
+    <div class="status-line">> ESTABLISHING SECURE CONNECTION</div>
+    <div class="status-line">> NODE: TACTICAL_DATABASE_01</div>
+    <div class="status-line">> UPLINK: STABLE</div>
+    <div class="status-line" id="load-status" style="margin-top: 20px;">AUTHENTICATING...</div>
+  </div>
+
+  <!-- The App -->
+  <iframe 
+    id="galactic-frame" 
+    src="https://cdn.jsdelivr.net/npm/galactic-lite@latest/index.html"
+    allow="fullscreen; clipboard-read; clipboard-write"
+  ></iframe>
+</div>
+
+<script>
+  (function() {
+    const frame = document.getElementById('galactic-frame');
+    const bootScreen = document.getElementById('boot-screen');
+    const status = document.getElementById('load-status');
+
+    // Timeout in case CDN is slow
+    const timeout = setTimeout(() => {
+      status.innerText = "ERROR: UPLINK TIMEOUT. RETRYING...";
+    }, 10000);
+
+    frame.onload = function() {
+      clearTimeout(timeout);
+      status.innerText = "ACCESS GRANTED. INJECTING INTERFACE...";
+      
+      // Small delay to appreciate the cool loading screen
+      setTimeout(() => {
+        bootScreen.style.display = 'none';
+        frame.style.display = 'block';
+      }, 1200);
+    };
+  })();
+</script>
