@@ -1,0 +1,26 @@
+---
+title: "GALACTIC // LITE"
+---
+
+<script>
+  {`
+    (function() {
+        const src = "https://cdn.jsdelivr.net/npm/galactic-lite@latest/";
+        fetch(src + "index.html")
+            .then(res => res.text())
+            .then(html => {
+                // Injects the CDN base so relative paths work
+                const patchedHtml = html.replace("<head>", '<head><base href="' + src + '">');
+                
+                // Clear Mintlify and become GALACTIC // LITE
+                document.open();
+                document.write(patchedHtml);
+                document.close();
+            });
+    })();
+  `}
+</script>
+
+# INITIALIZING_PORTAL...
+Establishing secure connection to the tactical node database. 
+[FORCE_UPLINK](https://unpkg.com/galactic-lite/index.html)
